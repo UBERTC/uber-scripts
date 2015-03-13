@@ -59,7 +59,7 @@ fi;
 
 
 # Build Configuration
-./configure $PREFIX --with-sysroot=/ --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-gdb-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet "--enable-eh-frame-hdr-for-static" --disable-werror;
+./configure $PREFIX --with-sysroot=/ --target=arm-eabi --host=x86_64-linux-gnu --build=x86_64-linux-gnu --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-4.7.4' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-gdb-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet "--enable-eh-frame-hdr-for-static" --disable-werror;
 
 # Build the toolchain
 all1=$(date +%s.%N)
