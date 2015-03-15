@@ -32,14 +32,13 @@ echo "${bldblu}| _|    _|  _|    _|  _|        _|    _| |${txtrst}"
 echo "${bldblu}|   _|_|    _|_|_|    _|_|_|_|  _|    _| |${txtrst}"
 echo "${bldblu}|________________________________________|${txtrst}"
 echo "${bldblu}                                          ${txtrst}"
-sleep 5
 
 # Make sure gcc is on the correct branch
 cd ../gcc/gcc-UBER && rm -rf * && git reset --hard && git fetch uu uber-4.8 && git checkout FETCH_HEAD && cd ../../build;
 
 # Try to parallelize the build for faster performance.
-JOBS="$(cat /proc/cpuinfo | grep -c processor)";
-MAKE_FLAGS=-j"$JOBS";
+export NUM_JOBS="$(cat /proc/cpuinfo | grep -c processor)"
+MAKE_FLAGS=-j"$NUM_JOBS";
 
 # Autoclean Build Folder and Final Toolchain Destination
 if [ -e Makefile ];
