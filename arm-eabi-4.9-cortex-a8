@@ -34,7 +34,7 @@ echo "${bldblu}|________________________________________|${txtrst}"
 echo "${bldblu}                                          ${txtrst}"
 
 # Make sure gcc is on the correct branch
-cd ../gcc/gcc-UBER && rm -rf * && git reset --hard && git fetch uu uber-4.8 && git checkout FETCH_HEAD && cd ../../;
+cd ../gcc/gcc-UBER && rm -rf * && git reset --hard && git fetch uu uber-4.9 && git checkout FETCH_HEAD && cd ../../;
 
 # Try to parallelize the build for faster performance.
 export NUM_JOBS="$(cat /proc/cpuinfo | grep -c processor)";
@@ -50,7 +50,7 @@ then
     make $MAKE_FLAGS clean;
     make $MAKE_FLAGS distclean;
 fi;
-export UBER_PATH=$DIR/out/arm-eabi-4.8;
+export UBER_PATH=$DIR/out/arm-eabi-4.9-cortex-a8;
 export PREFIX=--prefix=$UBER_PATH;
 if [ -d "$UBER_PATH" ];
 then
@@ -61,18 +61,18 @@ else
 fi;
 
 # UBERROOT
-cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-4.8 && git checkout FETCH_HEAD && cd ../build;
+cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-4.9 && git checkout FETCH_HEAD && cd ../build;
 export UBERROOT_SRC_PATH=../sysroot/arch-arm;
 export UBERROOT_DEST_PATH=$UBER_PATH;
 cp -R $UBERROOT_SRC_PATH -f $UBERROOT_DEST_PATH;
 export UBERROOT=--with-sysroot=$UBERROOT_DEST_PATH/arch-arm;
 
 # Build Configuration
-./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-eabi --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-4.8.5' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-gdb-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-graphite=yes --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet "--enable-eh-frame-hdr-for-static" --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --disable-werror;
+./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-eabi --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-4.9.3' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-gdb-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-graphite=yes --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet "--enable-eh-frame-hdr-for-static" --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --disable-werror --with-float=soft --with-fpu=neon --with-cpu=cortex-a8 --with-tune=cortex-a8;
 
 # Build the toolchain
 all1=$(date +%s.%N)
-script -q $DIR/out/UBER-ARM-EABI-4.8.log -c "make $MAKE_FLAGS";
+script -q $DIR/out/UBER-ARM-EABI-4.9.log -c "make $MAKE_FLAGS";
 
 # Install the toolchain - two times just in case
 make install && make install;
@@ -88,7 +88,7 @@ then
     echo "${bldgrn}       _/  _/    _/  _/        _/        _/            _/_/      _/_/  ${txtrst}"
     echo "${bldgrn}_/_/_/      _/_/_/    _/_/_/    _/_/_/    _/_/_/  _/_/_/    _/_/_/      ${txtrst}"
     echo "${bldgrn} ${txtrst}"
-    echo "${bldgrn}Your UBER 4.8 arm-eabi Toolchain has completed successfully!!! ${txtrst}"
+    echo "${bldgrn}Your UBER 4.9 arm-eabi Toolchain has completed successfully!!! ${txtrst}"
     echo "${bldgrn}Toolchain is located at:${txtrst}${grn} $UBER_PATH ${txtrst}"
     echo "${bldgrn} ${txtrst}"
     all2=$(date +%s.%N)
@@ -104,7 +104,7 @@ else
     echo "${bldred}**************ERROR***************** ${txtrst}"
     echo "${bldred}**************ERROR***************** ${txtrst}"
     echo " "
-    echo "${bldred}Error Log is found at:${txtrst}${red} $DIR/out/UBER-ARM-EABI-4.8.log ${txtrst}"
+    echo "${bldred}Error Log is found at:${txtrst}${red} $DIR/out/UBER-ARM-EABI-4.9.log ${txtrst}"
     echo " "
     read -p "Press ENTER to Exit"
 fi;
