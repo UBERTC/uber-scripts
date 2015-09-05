@@ -61,7 +61,7 @@ else
 fi;
 
 # UBERROOT
-cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-4.9 && git checkout FETCH_HEAD && cd ../build;
+cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-5.2 && git checkout FETCH_HEAD && cd ../build;
 export UBERROOT_SRC_PATH=../sysroot/arch-arm;
 export UBERROOT_DEST_PATH=$UBER_PATH;
 cp -R $UBERROOT_SRC_PATH -f $UBERROOT_DEST_PATH;

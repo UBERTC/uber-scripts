@@ -50,7 +50,7 @@ then
     make $MAKE_FLAGS clean;
     make $MAKE_FLAGS distclean;
 fi;
-export UBER_PATH=$DIR/out/arm-eabi-5.2;
+export UBER_PATH=$DIR/out/arm-linux-androideabi-5.2-cortex-a15;
 export PREFIX=--prefix=$UBER_PATH;
 if [ -d "$UBER_PATH" ];
 then
@@ -68,17 +68,17 @@ cp -R $UBERROOT_SRC_PATH -f $UBERROOT_DEST_PATH;
 export UBERROOT=--with-sysroot=$UBERROOT_DEST_PATH/arch-arm;
 
 # Build Configuration
-./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-eabi --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-5.2.x' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-gdb-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-graphite=yes --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet "--enable-eh-frame-hdr-for-static" --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --disable-werror;
+./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-linux-androideabi --program-transform-name='s&^&arm-linux-androideabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-5.2.x' --with-binutils-version=uber --with-gold-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-gdb-version=uber --with-mpc-version=uber --with-cloog-version=uber --with-isl-version=uber --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --enable-graphite=yes "--enable-eh-frame-hdr-for-static" --enable-initfini-array --enable-gold=default --enable-threads --enable-multilib --with-libexpat --with-python --with-gnu-ld --with-gnu-as --disable-werror --disable-option-checking --disable-bootstrap --disable-libsanitizer --disable-libgomp --quiet --enable-plugins  --with-float=soft --with-fpu=neon-vfpv4 --with-cpu=cortex-a15 --with-tune=cortex-a15;
 
 # Build the toolchain
 all1=$(date +%s.%N)
-script -q $DIR/out/UBER-ARM-EABI-5.2.log -c "make $MAKE_FLAGS";
+script -q $DIR/out/UBER-ANDROIDEABI-5.2.log -c "make $MAKE_FLAGS";
 
 # Install the toolchain - two times just in case
 make install && make install;
 
 # Did we successfully make the toolchain?
-GCC_INSTALLED=$UBER_PATH/bin/arm-eabi-gcc;
+GCC_INSTALLED=$UBER_PATH/bin/arm-linux-androideabi-gcc;
 if [ -e $GCC_INSTALLED ];
 then
     echo "${bldgrn} ${txtrst}"
@@ -88,7 +88,7 @@ then
     echo "${bldgrn}       _/  _/    _/  _/        _/        _/            _/_/      _/_/  ${txtrst}"
     echo "${bldgrn}_/_/_/      _/_/_/    _/_/_/    _/_/_/    _/_/_/  _/_/_/    _/_/_/      ${txtrst}"
     echo "${bldgrn} ${txtrst}"
-    echo "${bldgrn}Your UBER 5.2.x arm-eabi Toolchain has completed successfully!!! ${txtrst}"
+    echo "${bldgrn}Your UBER 5.2.x androideabi Toolchain has completed successfully!!! ${txtrst}"
     echo "${bldgrn}Toolchain is located at:${txtrst}${grn} $UBER_PATH ${txtrst}"
     echo "${bldgrn} ${txtrst}"
     all2=$(date +%s.%N)
@@ -104,7 +104,7 @@ else
     echo "${bldred}**************ERROR***************** ${txtrst}"
     echo "${bldred}**************ERROR***************** ${txtrst}"
     echo " "
-    echo "${bldred}Error Log is found at:${txtrst}${red} $DIR/out/UBER-ARM-EABI-5.2.log ${txtrst}"
+    echo "${bldred}Error Log is found at:${txtrst}${red} $DIR/out/UBER-ANDROIDEABI-5.2.log ${txtrst}"
     echo " "
     read -p "Press ENTER to Exit"
 fi;

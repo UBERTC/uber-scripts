@@ -50,7 +50,7 @@ then
     make $MAKE_FLAGS clean;
     make $MAKE_FLAGS distclean;
 fi;
-export UBER_PATH=$DIR/out/arm-eabi-5.2;
+export UBER_PATH=$DIR/out/arm-eabi-5.2-cortex-a15;
 export PREFIX=--prefix=$UBER_PATH;
 if [ -d "$UBER_PATH" ];
 then
@@ -68,7 +68,7 @@ cp -R $UBERROOT_SRC_PATH -f $UBERROOT_DEST_PATH;
 export UBERROOT=--with-sysroot=$UBERROOT_DEST_PATH/arch-arm;
 
 # Build Configuration
-./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-eabi --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-5.2.x' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-gdb-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-graphite=yes --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet "--enable-eh-frame-hdr-for-static" --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --disable-werror;
+./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-eabi --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-5.2.x' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-gdb-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-graphite=yes --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet "--enable-eh-frame-hdr-for-static" --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --disable-werror --with-float=soft --with-fpu=neon-vfpv4 --with-cpu=cortex-a15 --with-tune=cortex-a15;
 
 # Build the toolchain
 all1=$(date +%s.%N)
