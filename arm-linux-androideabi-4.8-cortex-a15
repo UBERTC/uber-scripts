@@ -13,6 +13,7 @@
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 red=$(tput setaf 1) # red
 grn=$(tput setaf 2) # green
+blu=$(tput setaf 4) # blue
 txtbld=$(tput bold) # Bold
 bldred=${txtbld}$(tput setaf 1) # red
 bldgrn=${txtbld}$(tput setaf 2) # green
@@ -44,11 +45,14 @@ MAKE_FLAGS=-j"$NUM_JOBS";
 export DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd );
 
 # Autoclean Build Folder and Final Toolchain Destination
+echo ""
+echo "${bldblu}Cleaning up files from previous compile!${txtrst}"
+echo ""
 cd build;
 if [ -e Makefile ];
 then
-    make $MAKE_FLAGS clean;
-    make $MAKE_FLAGS distclean;
+    make $MAKE_FLAGS clean &> /dev/null;
+    make $MAKE_FLAGS distclean &> /dev/null;
 fi;
 export UBER_PATH=$DIR/out/arm-linux-androideabi-4.8-cortex-a15;
 export PREFIX=--prefix=$UBER_PATH;
@@ -71,16 +75,23 @@ export UBERROOT=--with-sysroot=$UBERROOT_DEST_PATH/arch-arm;
 ./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-linux-androideabi --program-transform-name='s&^&arm-linux-androideabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-4.8.5' --with-binutils-version=uber --with-gold-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-gdb-version=uber --with-mpc-version=uber --with-cloog-version=uber --with-isl-version=uber --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --enable-graphite=yes "--enable-eh-frame-hdr-for-static" --enable-initfini-array --enable-gold=default --enable-threads --enable-multilib --with-libexpat --with-python --with-gnu-ld --with-gnu-as --disable-werror --disable-option-checking --disable-bootstrap --disable-libsanitizer --quiet --enable-plugins --with-float=soft --with-fpu=neon-vfpv4 --with-cpu=cortex-a15 --with-tune=cortex-a15;
 
 # Build the toolchain
+echo ""
+echo "${bldblu}Building your UBER arm-linux-androideabi-4.8 Toolchain!!!${txtrst}"
+echo ""
 all1=$(date +%s.%N)
-script -q $DIR/out/UBER-ANDROIDEABI-4.8.log -c "make $MAKE_FLAGS";
+script -q $DIR/out/UBER-ANDROIDEABI-4.8.log -c "make 1>/dev/null $MAKE_FLAGS";
 
 # Install the toolchain - two times just in case
-make install && make install;
+echo ""
+echo "${bldblu}Installing Toolchain to:${txtrst}${blu} $UBER_PATH ${txtrst}"
+echo ""
+make install &> /dev/null && make install &> /dev/null;
 
 # Did we successfully make the toolchain?
 GCC_INSTALLED=$UBER_PATH/bin/arm-linux-androideabi-gcc;
 if [ -e $GCC_INSTALLED ];
 then
+    rm -rf $UBERROOT_DEST_PATH/arch-arm;
     echo "${bldgrn} ${txtrst}"
     echo "${bldgrn}      _/_/_/                                                            ${txtrst}"
     echo "${bldgrn}   _/        _/    _/    _/_/_/    _/_/_/    _/_/      _/_/_/    _/_/_/ ${txtrst}"
