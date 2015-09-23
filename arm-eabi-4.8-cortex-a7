@@ -67,7 +67,7 @@ cp -R $UBERROOT_SRC_PATH -f $UBERROOT_DEST_PATH;
 export UBERROOT=--with-sysroot=$UBERROOT_DEST_PATH/arch-arm;
 
 # Build Configuration
-./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-eabi --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-4.8.5' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-graphite=yes --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet "--enable-eh-frame-hdr-for-static" --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --disable-werror --with-float=soft --with-fpu=neon-vfpv4 --with-cpu=cortex-a7 --with-tune=cortex-a7;
+./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-eabi --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-4.8.5' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet "--enable-eh-frame-hdr-for-static" --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --disable-werror --with-float=soft --with-fpu=neon-vfpv4 --with-cpu=cortex-a7 --with-tune=cortex-a7;
 
 echo ""
 echo "${bldblu}Building your UBER arm-eabi-4.8 Toolchain!!!${txtrst}"
