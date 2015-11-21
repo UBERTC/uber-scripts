@@ -59,8 +59,15 @@ else
     mkdir -p $UBER_PATH;
 fi;
 
+# UBERROOT
+cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-5.2 && git checkout FETCH_HEAD && cd ../build;
+export UBERROOT_SRC_PATH=../sysroot/arch-arm;
+export UBERROOT_DEST_PATH=$UBER_PATH;
+cp -R $UBERROOT_SRC_PATH -f $UBERROOT_DEST_PATH;
+export UBERROOT=--with-sysroot=$UBERROOT_DEST_PATH/arch-arm;
+
 # Build Configuration
-./configure $PREFIX --with-sysroot=/ --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-eabi --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-6.0.0' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet --disable-werror --disable-shared;
+./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-eabi --program-transform-name='s&^&arm-eabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-6.0.0' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-threads --enable-ld=default --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --disable-werror --disable-shared;
 
 echo ""
 echo "${bldblu}Building your UBER arm-eabi-6.0 Toolchain!!!${txtrst}"
@@ -76,6 +83,7 @@ make install &> /dev/null;
 GCC_INSTALLED=$UBER_PATH/bin/arm-eabi-gcc;
 if [ -e $GCC_INSTALLED ];
 then
+    rm -rf $UBERROOT_DEST_PATH/arch-arm;
     echo ""
     echo "${bldgrn}  _|_|_|  _|    _|    _|_|_|    _|_|_|  _|_|_|_|    _|_|_|    _|_|_|  _|${txtrst}"
     echo "${bldgrn}_|        _|    _|  _|        _|        _|        _|        _|        _|${txtrst}"
@@ -83,7 +91,7 @@ then
     echo "${bldgrn}      _|  _|    _|  _|        _|        _|              _|        _|    ${txtrst}"
     echo "${bldgrn}_|_|_|      _|_|      _|_|_|    _|_|_|  _|_|_|_|  _|_|_|    _|_|_|    _|${txtrst}"
     echo ""
-    echo "${bldgrn}Your UBER 6.0 arm-eabi Toolchain has completed successfully!!! ${txtrst}"
+    echo "${bldgrn}Your UBER 6.0 arm-eabi Toolchain has completed successfully!!!${txtrst}"
     echo "${bldgrn}Toolchain is located at:${txtrst}${grn} $UBER_PATH ${txtrst}"
     echo ""
     all2=$(date +%s.%N)
