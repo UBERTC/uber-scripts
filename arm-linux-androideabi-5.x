@@ -35,7 +35,7 @@ echo "${bldblu}|______________________________________________________________|$
 echo ""
 echo ""
 
-cd ../gcc/gcc-UBER && rm -rf * && git reset --hard && git fetch uu uber-5.3 && git checkout FETCH_HEAD && cd ../../;
+cd ../gcc/gcc-UBER && rm -rf * && git reset --hard && git fetch uu uber-5.x && git checkout FETCH_HEAD && cd ../../;
 export DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd );
 export NUM_JOBS="$(cat /proc/cpuinfo | grep -c processor)";
 MAKE_FLAGS=-j"$NUM_JOBS";
@@ -49,7 +49,7 @@ then
     make $MAKE_FLAGS clean &> /dev/null;
     make $MAKE_FLAGS distclean &> /dev/null;
 fi;
-export UBER_PATH=$DIR/out/arm-linux-androideabi-5.3-cortex-a7;
+export UBER_PATH=$DIR/out/arm-linux-androideabi-5.x;
 export PREFIX=--prefix=$UBER_PATH;
 if [ -d "$UBER_PATH" ];
 then
@@ -60,20 +60,20 @@ else
 fi;
 
 # UBERROOT
-cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-5.3 && git checkout FETCH_HEAD && cd ../build;
+cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-5.x && git checkout FETCH_HEAD && cd ../build;
 export UBERROOT_SRC_PATH=../sysroot/arch-arm;
 export UBERROOT_DEST_PATH=$UBER_PATH;
 cp -R $UBERROOT_SRC_PATH -f $UBERROOT_DEST_PATH;
 export UBERROOT=--with-sysroot=$UBERROOT_DEST_PATH/arch-arm;
 
 # Build Configuration
-./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-linux-androideabi --program-transform-name='s&^&arm-linux-androideabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-5.3.x' --with-binutils-version=uber --with-gold-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-cloog-version=uber --with-isl-version=uber --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --enable-initfini-array --enable-gnu-indirect-function --enable-gold=default --enable-threads --enable-multilib --with-libexpat --with-python --with-gnu-ld --with-gnu-as --disable-werror --disable-shared --disable-option-checking --disable-bootstrap --disable-libsanitizer --disable-libgomp --quiet --enable-plugins --with-float=soft --with-fpu=neon-vfpv4 --with-tune=cortex-a7;
+./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=arm-linux-androideabi --program-transform-name='s&^&arm-linux-androideabi-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-5.x.x' --with-binutils-version=uber --with-gold-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-cloog-version=uber --with-isl-version=uber --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --enable-initfini-array --enable-gnu-indirect-function --enable-gold=default --enable-threads --enable-multilib --with-libexpat --with-python --with-gnu-ld --with-gnu-as --disable-werror --disable-shared --disable-option-checking --disable-bootstrap --disable-libsanitizer --disable-libgomp --quiet --enable-plugins;
 
 echo ""
-echo "${bldblu}Building your UBER arm-linux-androideabi-5.3 Toolchain!!!${txtrst}"
+echo "${bldblu}Building your UBER arm-linux-androideabi-5.x Toolchain!!!${txtrst}"
 echo ""
 all1=$(date +%s.%N)
-script -q $DIR/out/UBER-ANDROIDEABI-5.3.log -c "make 1>/dev/null $MAKE_FLAGS";
+script -q $DIR/out/UBER-ANDROIDEABI-5.x.log -c "make 1>/dev/null $MAKE_FLAGS";
 
 echo ""
 echo "${bldblu}Installing Toolchain to:${txtrst}${blu} $UBER_PATH ${txtrst}"
@@ -91,7 +91,7 @@ then
     echo "${bldgrn}      _|  _|    _|  _|        _|        _|              _|        _|    ${txtrst}"
     echo "${bldgrn}_|_|_|      _|_|      _|_|_|    _|_|_|  _|_|_|_|  _|_|_|    _|_|_|    _|${txtrst}"
     echo ""
-    echo "${bldgrn}Your UBER 5.3.x androideabi Toolchain has completed successfully!!! ${txtrst}"
+    echo "${bldgrn}Your UBER 5.x.x androideabi Toolchain has completed successfully!!! ${txtrst}"
     echo "${bldgrn}Toolchain is located at:${txtrst}${grn} $UBER_PATH ${txtrst}"
     echo ""
     all2=$(date +%s.%N)
@@ -105,7 +105,7 @@ else
     echo "${bldred}_|        _|    _|  _|    _|  _|    _|  _|    _|${txtrst}"
     echo "${bldred}_|_|_|_|  _|    _|  _|    _|    _|_|    _|    _|${txtrst}"
     echo ""
-    echo "${bldred}Error Log is found at:${txtrst}${red} $DIR/out/UBER-ANDROIDEABI-5.3.log ${txtrst}"
+    echo "${bldred}Error Log is found at:${txtrst}${red} $DIR/out/UBER-ANDROIDEABI-5.x.log ${txtrst}"
     echo ""
     read -p "Press ENTER to Exit"
 fi;
