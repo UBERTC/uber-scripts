@@ -35,7 +35,8 @@ echo "${bldblu}|______________________________________________________________|$
 echo ""
 echo ""
 
-cd ../gcc/gcc-UBER && rm -rf * && git reset --hard && git fetch uu uber-5.x && git checkout FETCH_HEAD && cd ../../;
+cd ../gcc/gcc-UBER && rm -rf * && git reset --hard && git fetch uu uber-6.x-new && git checkout FETCH_HEAD && cd ../../;
+cd binutils/binutils-uber && rm -rf * && git reset --hard && git fetch uu 2.25 && git checkout FETCH_HEAD && cd ../../;
 export DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd );
 export NUM_JOBS="$(cat /proc/cpuinfo | grep -c processor)";
 MAKE_FLAGS=-j"$NUM_JOBS";
@@ -49,7 +50,7 @@ then
     make $MAKE_FLAGS clean &> /dev/null;
     make $MAKE_FLAGS distclean &> /dev/null;
 fi;
-export UBER_PATH=$DIR/out/aarch64-linux-android-5.x-kernel;
+export UBER_PATH=$DIR/out/aarch64-linux-android-6.x;
 export PREFIX=--prefix=$UBER_PATH;
 if [ -d "$UBER_PATH" ];
 then
@@ -60,20 +61,20 @@ else
 fi;
 
 # UBERROOT
-cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-5.x && git checkout FETCH_HEAD && cd ../build;
+cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-6.x && git checkout FETCH_HEAD && cd ../build;
 export UBERROOT_SRC_PATH=../sysroot/arch-arm64;
 export UBERROOT_DEST_PATH=$UBER_PATH;
 cp -R $UBERROOT_SRC_PATH -f $UBERROOT_DEST_PATH;
 export UBERROOT=--with-sysroot=$UBERROOT_DEST_PATH/arch-arm64;
 
 # Build Configuration
-./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=aarch64-linux-android --program-transform-name='s&^&aarch64-linux-android-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-5.x.x' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-threads --enable-ld=default --enable-fix-cortex-a53-835769 -enable-plugins --disable-gold --disable-option-checking --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --disable-werror --disable-shared --disable-libmudflap --disable-libquadmath --disable-libsanitizer --disable-libgomp --disable-libatomic;
+./configure $PREFIX $UBERROOT --host=x86_64-linux-gnu --build=x86_64-linux-gnu --target=aarch64-linux-android --program-transform-name='s&^&aarch64-linux-android-&' --with-gcc-version=UBER --with-pkgversion='UBERTC-6.x.x' --with-binutils-version=uber --with-gmp-version=uber --with-mpfr-version=uber --with-mpc-version=uber --with-cloog-version=uber --with-isl-version=uber --enable-threads --enable-ld=default --enable-fix-cortex-a53-835769 --enable-plugins --enable-gold --disable-option-checking --disable-libsanitizer --enable-libatomic-ifuncs=no --enable-initfini-array --disable-softfloat --disable-docs --disable-nls --with-host-libstdcxx='-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm' --disable-bootstrap --quiet --with-gxx-include-dir=$UBERROOT_DEST_PATH/c++ --disable-werror --disable-shared;
 
 echo ""
-echo "${bldblu}Building your UBER aarch64-5.x Toolchain!!!${txtrst}"
+echo "${bldblu}Building your UBER aarch64-6.x Toolchain!!!${txtrst}"
 echo ""
 all1=$(date +%s.%N)
-script -q $DIR/out/UBER-AARCH64-5.x.log -c "make 1>/dev/null $MAKE_FLAGS";
+script -q $DIR/out/UBER-AARCH64-6.x.log -c "make 1>/dev/null $MAKE_FLAGS";
 
 echo ""
 echo "${bldblu}Installing Toolchain to:${txtrst}${blu} $UBER_PATH ${txtrst}"
@@ -91,7 +92,7 @@ then
     echo "${bldgrn}      _|  _|    _|  _|        _|        _|              _|        _|    ${txtrst}"
     echo "${bldgrn}_|_|_|      _|_|      _|_|_|    _|_|_|  _|_|_|_|  _|_|_|    _|_|_|    _|${txtrst}"
     echo ""
-    echo "${bldgrn}Your UBER 5.x aarch64 Toolchain has completed successfully!!! ${txtrst}"
+    echo "${bldgrn}Your UBER 6.x aarch64 Toolchain has completed successfully!!! ${txtrst}"
     echo "${bldgrn}Toolchain is located at:${txtrst}${grn} $UBER_PATH ${txtrst}"
     echo ""
     all2=$(date +%s.%N)
@@ -105,7 +106,7 @@ else
     echo "${bldred}_|        _|    _|  _|    _|  _|    _|  _|    _|${txtrst}"
     echo "${bldred}_|_|_|_|  _|    _|  _|    _|    _|_|    _|    _|${txtrst}"
     echo ""
-    echo "${bldred}Error Log is found at:${txtrst}${red} $DIR/out/UBER-AARCH64-5.x.log ${txtrst}"
+    echo "${bldred}Error Log is found at:${txtrst}${red} $DIR/out/UBER-AARCH64-6.x.log ${txtrst}"
     echo ""
     read -p "Press ENTER to Exit"
 fi;
