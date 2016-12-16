@@ -35,8 +35,9 @@ echo "${bldblu}|______________________________________________________________|$
 echo ""
 echo ""
 
-cd ../gcc/gcc-UBER && rm -rf * && git reset --hard && git fetch uu uber-7.0 && git checkout FETCH_HEAD && cd ../../;
-cd binutils/binutils-uber && rm -rf * && git reset --hard && git fetch uu 2.25 && git checkout FETCH_HEAD && cd ../../;
+cd ../gcc/gcc-UBER && rm -rf * && git reset --hard && git fetch uu uber-7.0 && git checkout FETCH_HEAD;
+cd ../../binutils/binutils-uber && rm -rf * && git reset --hard && git fetch uu 2.25 && git checkout FETCH_HEAD;
+cd ../../
 export DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd );
 export NUM_JOBS="$(cat /proc/cpuinfo | grep -c processor)";
 MAKE_FLAGS=-j"$NUM_JOBS";
@@ -61,7 +62,7 @@ else
 fi;
 
 # UBERROOT
-cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-7.x && git checkout FETCH_HEAD && cd ../build;
+cd ../sysroot && rm -rf * && git reset --hard && git fetch uu gcc-6.x && git checkout FETCH_HEAD && cd ../build;
 export UBERROOT_SRC_PATH=../sysroot/arch-arm64;
 export UBERROOT_DEST_PATH=$UBER_PATH;
 cp -R $UBERROOT_SRC_PATH -f $UBERROOT_DEST_PATH;
@@ -92,7 +93,7 @@ then
     echo "${bldgrn}      _|  _|    _|  _|        _|        _|              _|        _|    ${txtrst}"
     echo "${bldgrn}_|_|_|      _|_|      _|_|_|    _|_|_|  _|_|_|_|  _|_|_|    _|_|_|    _|${txtrst}"
     echo ""
-    echo "${bldgrn}Your UBER 7.x aarch64 Toolchain has completed successfully!!! ${txtrst}"
+    echo "${bldgrn}Your UBER 6.x aarch64 Toolchain has completed successfully!!! ${txtrst}"
     echo "${bldgrn}Toolchain is located at:${txtrst}${grn} $UBER_PATH ${txtrst}"
     echo ""
     all2=$(date +%s.%N)
@@ -106,7 +107,7 @@ else
     echo "${bldred}_|        _|    _|  _|    _|  _|    _|  _|    _|${txtrst}"
     echo "${bldred}_|_|_|_|  _|    _|  _|    _|    _|_|    _|    _|${txtrst}"
     echo ""
-    echo "${bldred}Error Log is found at:${txtrst}${red} $DIR/out/UBER-AARCH64-7.x.log ${txtrst}"
+    echo "${bldred}Error Log is found at:${txtrst}${red} $DIR/out/UBER-AARCH64-6.x.log ${txtrst}"
     echo ""
     read -p "Press ENTER to Exit"
 fi;
