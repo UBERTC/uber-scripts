@@ -83,6 +83,9 @@ echo ""
 make install &> /dev/null;
 
 GCC_INSTALLED=$UBER_PATH/bin/aarch64-linux-android-gcc;
+strip -s $UBER_PATH/bin/*
+strip -s $UBER_PATH/aarch64-linux-android/bin/*
+strip -s $UBER_PATH/libexec/gcc/aarch64-linux-android/*/*
 if [ -e $GCC_INSTALLED ];
 then
     rm -rf $UBERROOT_DEST_PATH/arch-arm64;
