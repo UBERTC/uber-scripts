@@ -82,6 +82,9 @@ echo ""
 make install &> /dev/null;
 
 GCC_INSTALLED=$UBER_PATH/bin/arm-linux-androideabi-gcc;
+strip -s $UBER_PATH/bin/*
+strip -s $UBER_PATH/arm-linux-androideabi/bin/*
+strip -s $UBER_PATH/libexec/gcc/arm-linux-androideabi/*/*
 if [ -e $GCC_INSTALLED ];
 then
     rm -rf $UBERROOT_DEST_PATH/arch-arm;
